@@ -31,6 +31,12 @@ body::before {
     backdrop-filter: blur(15px);
 }
 
+/*UTLITIES*/
+.regular-txt {
+    font-weight: 400;
+}
+/*UTLITIES*/
+
 .main-container {
     width: 300px;
     height: 496px;
@@ -40,4 +46,81 @@ body::before {
             rgb(255, 255, 255, 0.15));
     border-radius: 12px;
     backdrop-filter: blur(100px);
+    padding: 20px;
 }
+
+/*INPUT CONTAINER*/
+
+.input-container {
+    position: relative;
+    margin-bottom: 25px;
+}
+.city-input {
+    width: 100%;
+    border-radius: 99px;
+    border: 3px solid transparent;
+    background: rgb(0,0,0,0.15);
+    outline: none;
+    font-weight: 500;
+    transition: 0.25s border;
+    padding: 10px 45px 10px 16px;
+}
+
+.city-input:focus {
+    border: 3px solid rgb(0,0,0,0.15);
+
+}
+.city-input::placeholder {
+    color: rgb(255,255,255,0.8);
+}
+
+.search-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    display:  flex;
+    border:none;
+    cursor: pointer;
+}
+
+/*END INPUT CONTAINER*/
+
+/*SECTION: WEATHER INFO*/
+
+.weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.location-date-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+}
+
+.weather-summary-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather-summary-img {
+    width: 120px;
+    height: 120px;
+}
+
+.weather-summary-info {
+    text-align: end;
+
+}
+/*SECTION: WEATHER INFO*/
