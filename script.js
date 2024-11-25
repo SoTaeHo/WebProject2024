@@ -48,14 +48,14 @@ async function getFetchData(endPoint, city) {
 }
 
 function getWeatherIcon(id) {
-    console.log(id)
-    if(id <= 232) return 'thunderstorm.svg';
-    if(id <= 321) return 'Drizzle.svg';
-    if(id <= 531) return 'rain.svg';
-    if(id <= 622) return 'snow.svg';
-    if(id <= 781) return 'atmosphere.svg';
-    if(id <= 800) return 'clear.svg';
-    else return 'clouds.svg';
+    // console.log(id)
+    if(id <= 232) return 'thunderstorm';
+    if(id <= 321) return 'Drizzle';
+    if(id <= 531) return 'rain';
+    if(id <= 622) return 'snow';
+    if(id <= 781) return 'atmosphere';
+    if(id <= 800) return 'clear';
+    else return 'clouds';
 }
 
 function getCurrentDate() {
@@ -80,18 +80,20 @@ async function updateWeatherInfo(city) {
     const {
         name: country,
         main: { temp, humidity },
-        weather: [{ id, main}],
+        weather: [{ id, description}],
         wind: {speed}
     } = weatherData
 
     countryTxt.textContent = await translateCity(country, "en", "ko");
     // console.log("after translate", await translateCity(country));
     tempTxt.textContent = Math.round(temp) + '°C';
-    conditionTxt.textContent = main
+    conditionTxt.textContent = description
     humidityValueTxt.textContent = humidity + '%';
     windValueTxt.textContent = speed + 'm/s';
-    weatherSummaryImg.src = `./assets/weather/${getWeatherIcon(id)}`;
+    weatherSummaryImg.src = `./assets/weather/${getWeatherIcon(id)}.svg`;
     currentDateTxt.textContent = getCurrentDate();
+
+    changeBackground(id);
 
     await updateForecastInfo(translatedCity);
     showDisplaySection(weatherInfoSection)
@@ -106,17 +108,14 @@ async function updateForecastInfo(city) {
     forecastItemsContainer.innerHTML = '';
     forecastData.list.forEach(forecastWeather => {
         if(forecastWeather.dt_txt.includes(timeTaken) && !forecastWeather.dt_txt.includes(todayDate)) {
-            console.log(forecastWeather);
             updateForecastItems(forecastWeather);
         }
     })
 
-    console.log(todayDate);
-    console.log(forecastData);
 }
 
 function updateForecastItems(weatherData) {
-    console.log(weatherData)
+    // console.log(weatherData)
     const {
         dt_txt: date,
         weather: [{id, main}],
@@ -130,7 +129,7 @@ function updateForecastItems(weatherData) {
     const forecastItem = `
             <div class="forecast-item">
                 <h5 class="forecast-item-date regular-txt">${dateResult}</h5>
-                <img src="assets/weather/${getWeatherIcon(id)}" alt="" class="forecast-item-img">
+                <img src="assets/weather/${getWeatherIcon(id)}.svg" alt="" class="forecast-item-img">
                 <h5 class="forecast-item-temp-txt">${Math.round(temp)} ℃</h5>
             </div>
     `
@@ -170,4 +169,21 @@ async function translateCity(query, source, target) {
         return returnedString.split(" ").pop();
     }
     return "번역 실패"; // 번역 실패 시 기본 메시지
+}
+
+
+// getWeatherIcon()을 통해서 id를 받아온다.
+// 이후 body의 background의 url을 수정하여 해당 날짜에 알맞은 이미지를 가져온다.
+function changeBackground(id) {
+    console.log("call changeBackground")
+    const body = document.querySelector('body');
+    body.style.background = `url("./assets/background/${getWeatherIcon(id)}.jpg") center / cover no-repeat`;
+
+    // body.style.background = `url("./assets/background/thunderstorm.jpg") center / cover no-repeat`;
+    // body.style.background = `url("./assets/background/snow.jpg") center / cover no-repeat`;
+    // body.style.background = `url("./assets/background/rain.jpg") center / cover no-repeat`;
+    // body.style.background = `url("./assets/background/drizzle.jpg") center / cover no-repeat`;
+    // body.style.background = `url("./assets/background/clouds.jpg") center / cover no-repeat`;
+    // body.style.background = `url("./assets/background/atmosphere.jpg") center / cover no-repeat`;
+    // body.style.background = `url("./assets/background/clear.jpg") center / cover no-repeat`;
 }
