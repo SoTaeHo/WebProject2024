@@ -15,14 +15,14 @@
 }
 
 body {
-    background: url("assets/bg.jpg") center;
+    background: url("assets/background/bg.jpg") center;
     width: 100%;
     height: 100dvh;
     background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(8px);
 }
 body::before {
     width: 100%;
@@ -42,8 +42,8 @@ body::before {
     height: 496px;
     z-index: 1;
     background: linear-gradient(
-            to top, rgb(0,0,0,0.15),
-            rgb(255, 255, 255, 0.15));
+            to top, rgb(0,0,0,0.5),
+            rgb(255, 255, 255, 0.5));
     border-radius: 12px;
     backdrop-filter: blur(100px);
     padding: 20px;
@@ -113,6 +113,12 @@ body::before {
     justify-content: space-between;
     align-items: center;
 }
+.condition-txt {
+    word-wrap: break-word;
+    font-size: 15px;
+    white-space: normal;
+
+}
 
 .weather-summary-img {
     width: 120px;
@@ -121,6 +127,87 @@ body::before {
 
 .weather-summary-info {
     text-align: end;
+    width: 50%;
+    overflow: hidden;
+}
 
+
+
+.weather-condition-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.condition-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.condition-item span {
+    font-size: 30px;
+}
+
+.forecast-items-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding-bottom: 12px;
+}
+.forecast-items-container::-webkit-scrollbar {
+    height: 8px;
+}
+.forecast-items-container::-webkit-scrollbar-track{
+    background: rgb(0,0,0,0.1);
+    border-radius: 99px;
+}
+.forecast-items-container::-webkit-scrollbar-thumb {
+    background: rgb(0,0,0,0.15);
+    border-radius: 99px;
+}
+
+.forecast-item {
+    min-width: 70px;
+    background: rgb(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    align-items: center;
+    border-radius: 12px;
+    transition: 0.3s background;
+}
+
+.forecast-item:hover {
+    background: rgb(255,255,255,0.15);
+}
+
+.forecast-item-img {
+    width:35px;
+    height: 35px;
 }
 /*SECTION: WEATHER INFO*/
+
+/*SECTION: MESSAGE*/
+.section-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    margin-top: 25%;
+}
+
+.section-message > div > h4 {
+    margin-top: 30px;
+}
+
+.section-message img {
+    height: 180px;
+    width:fit-content;
+}
+
+
+/*SECTION: MESSAGE*/
