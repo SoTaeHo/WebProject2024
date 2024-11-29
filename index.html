@@ -15,9 +15,7 @@
     <header class="input-container">
         <input type="text" class="city-input" placeholder="예) 서울">
         <button class="search-btn">
-                <span class="material-symbols-outlined">
-search
-</span>
+                <span class="material-symbols-outlined">search</span>
         </button>
     </header>
 
@@ -83,10 +81,10 @@ search
             </div>
 
         </div>
-
+        <button class="bottom-btn request-btn">오늘의 추천</button>
     </section>
 
-    <section class="search-city section-message">
+    <section class="search-city section-message" style="display: none">
         <img src="assets/message/search-city.png" alt="">
         <div>
             <h4 class="regular-txt">날씨를 알고싶은 도시를<br> 입력해주세요.</h4>
@@ -103,6 +101,12 @@ search
             </h4>
         </div>
     </section>
+
+    <section class="mention section-message">
+        <div class="recommendation-txt"></div>
+        <button class="bottom-btn back-btn">돌아가기</button>
+    </section>
+
 </main>
 
 </body>
