@@ -276,7 +276,7 @@ body::before {
     box-sizing: border-box;
 }
 
-.bottom-btn:hover {
+.bottom-btn:hover:not(:disabled) {
     border: 3px solid rgb(0, 0, 0, 0.15);
     cursor: pointer;
 }
@@ -293,11 +293,7 @@ body::before {
     line-height: 2.0;
 }
 
-/*.mention .recommendation-txt {*/
-/*    height: 100%; !* 부모 섹션의 전체 높이를 채움 *!*/
-/*    width: 100%; !* 부모 섹션의 전체 너비를 채움 *!*/
-/*    display: flex; !* 텍스트를 가운데 정렬하기 위해 flex 사용 *!*/
-/*    align-items: center; !* 세로 가운데 정렬 *!*/
-/*    justify-content: center; !* 가로 가운데 정렬 *!*/
-/*    box-sizing: border-box; !* 패딩 포함 계산 *!*/
-/*}*/
+button:disabled {
+    cursor: not-allowed;
+    color: #666;
+}

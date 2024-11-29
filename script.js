@@ -27,8 +27,11 @@ const apiKey = config.OPEN_WEATHER_API_KEY;
 
 const OpenAIApiKey = config.OPENAI_API_KEY;
 
+let isAnalyzed = false;
+
 searchBtn.addEventListener('click', () => {
     if (cityInput.value.trim() !== '') {
+        isAnalyzed = false;
         // console.log(cityInput.value)
         updateWeatherInfo(cityInput.value)
         cityInput.value = ''
@@ -37,6 +40,7 @@ searchBtn.addEventListener('click', () => {
 })
 cityInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && cityInput.value.trim() !== '') {
+        isAnalyzed = false;
         // console.log(cityInput.value)
         updateWeatherInfo(cityInput.value)
 
@@ -46,6 +50,18 @@ cityInput.addEventListener('keydown', (e) => {
 })
 
 requestBtn.addEventListener('click', async () => {
+    if (isAnalyzed) {
+        showDisplaySection(mentionSection);
+        return;
+    }
+    // 버튼 비활성화 및 "분석중..." 표시
+    requestBtn.disabled = true;
+    const originalText = requestBtn.textContent; // 원래 버튼 텍스트 저장
+    requestBtn.textContent = "분석중...";
+
+    cityInput.disabled = true;
+    searchBtn.disabled = true;
+
     const weatherData = {
         temp: tempTxt.textContent,
         description: conditionTxt.textContent,
@@ -53,12 +69,22 @@ requestBtn.addEventListener('click', async () => {
         humidity: humidityValueTxt.textContent
     };
 
-    // OpenAI API로부터 추천 멘트 가져오기
-    const recommendation = await getWeatherRecommendations(weatherData);
-
-    showDisplaySection(mentionSection);
-    typeTextBySentence(recommendationTxt, recommendation, 40);
-})
+    try {
+        // OpenAI API로부터 추천 멘트 가져오기
+        const recommendation = await getWeatherRecommendations(weatherData);
+        isAnalyzed = true;
+        showDisplaySection(mentionSection);
+        typeTextBySentence(recommendationTxt, recommendation, 20);
+    } catch (error) {
+        console.error("Error fetching recommendations:", error);
+        recommendationTxt.textContent = "추천을 생성하는 데 실패했습니다.";
+    } finally {
+        // 버튼 활성화 및 원래 텍스트 복원
+        requestBtn.disabled = false;
+        requestBtn.textContent = originalText;
+        cityInput.disabled = false;
+        searchBtn.disabled = false;
+    }})
 
 backBtn.addEventListener('click', () => {
 
