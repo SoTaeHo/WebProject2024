@@ -177,8 +177,10 @@ async function translateCity(query, source, target) {
 function changeBackground(id) {
     console.log("call changeBackground")
     const body = document.querySelector('body');
-    body.style.background = `url("./assets/background/${getWeatherIcon(id)}.jpg") center / cover no-repeat`;
-
+    body.style.background = `url("./assets/background/${getWeatherIcon(id)}.jpg") no-repeat`;
+    body.style.backgroundSize = "150% 150%"; // 이미지 확대
+    body.style.backgroundPosition = "0% 50%"; // 초기 위치 설정
+    body.style.animation = "moveBackground 120s linear infinite"; // 애니메이션 설정
     // body.style.background = `url("./assets/background/thunderstorm.jpg") center / cover no-repeat`;
     // body.style.background = `url("./assets/background/snow.jpg") center / cover no-repeat`;
     // body.style.background = `url("./assets/background/rain.jpg") center / cover no-repeat`;
