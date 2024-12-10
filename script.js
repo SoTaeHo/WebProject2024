@@ -24,6 +24,7 @@ const forecastItemsContainer = document.querySelector('.forecast-items-container
 const recentSearchList = document.querySelector('.city-list-container ul');
 
 let recentCities = [];
+let recentForecast = [];
 const MAX_RECENT_CITIES = 5;
 
 
@@ -141,21 +142,12 @@ async function updateWeatherInfo(city) {
         wind: {speed}
     } = weatherData
 
-    countryTxt.textContent = await translateCity(country, "en", "ko");
-    // console.log("after translate", await translateCity(country));
-    tempTxt.textContent = Math.round(temp) + '°C';
-    conditionTxt.textContent = description
-    humidityValueTxt.textContent = humidity + '%';
-    windValueTxt.textContent = speed + 'm/s';
-    weatherSummaryImg.src = `./assets/weather/${getWeatherIcon(id)}.svg`;
-    currentDateTxt.textContent = getCurrentDate();
+    await updateWeatherInfoFromData(weatherData);
 
-    changeBackground(id);
-
-    await updateForecastInfo(translatedCity);
+    await updateForecastInfo(translatedCity, city);
 
     // 최근 검색 배열에 추가
-    addCityToRecent(translatedCity, weatherData);
+    addCityToRecent(city, weatherData);
 
     showDisplaySection(weatherInfoSection);
 }
@@ -177,11 +169,14 @@ async function updateWeatherInfoFromData(weatherData) {
     windValueTxt.textContent = speed + 'm/s';
     weatherSummaryImg.src = `./assets/weather/${getWeatherIcon(id)}.svg`;
     currentDateTxt.textContent = getCurrentDate();
+    changeBackground(id);
 
 }
 
-async function updateForecastInfo(city) {
+async function updateForecastInfo(city, KoInput) {
     const forecastData = await getFetchData('forecast', city);
+
+    addForecastToRecent(KoInput, forecastData);
 
     const timeTaken = "12:00:00";
     const todayDate = new Date().toISOString().split('T')[0];
@@ -376,26 +371,46 @@ function addCityToRecent(city, weatherData) {
     updateRecentCityList();
 }
 
+function addForecastToRecent(city, forecastData) {
+    recentForecast = recentForecast.filter(c => c.name !== city);
+
+    recentForecast.unshift({name: city, data: forecastData});
+
+    if(recentForecast.length > MAX_RECENT_CITIES) {
+        recentForecast.pop();
+    }
+}
+
+
 // 최근 검색 도시 목록 UI 업데이트
 function updateRecentCityList() {
     // 기존 목록 초기화
     recentSearchList.innerHTML = '';
 
-    // 배열을 기반으로 목록 갱신
-    recentCities.forEach(city => {
+    // 최근 검색 도시 배열(recentCities)을 기반으로 목록 갱신
+    recentCities.forEach((city, index) => {
         const li = document.createElement('li');
         li.textContent = city.name;
 
         // 클릭 이벤트 추가
         li.addEventListener('click', () => {
-            // 클릭된 도시의 데이터를 사용해 main-container 업데이트
+            console.log(`Click event for ${city.name}`);
+
+            // 클릭된 도시의 날씨 데이터를 사용해 main-container 업데이트
             updateWeatherInfoFromData(city.data);
+
+            // 해당 도시의 예보 데이터를 recentForecast 배열에서 가져와 forecastItemsContainer 업데이트
+            const forecastData = recentForecast.find(forecast => forecast.name === city.name);
+            if (forecastData) {
+                updateForecastInfoFromData(forecastData.data.list); // 예보 정보를 사용해 업데이트
+            } else {
+                console.error(`No forecast data found for ${city.name}`);
+            }
         });
 
         recentSearchList.appendChild(li);
     });
 }
-
 
 
 // 예보 데이터를 사용해 forecastItemsContainer 업데이트
