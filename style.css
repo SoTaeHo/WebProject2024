@@ -79,6 +79,7 @@ body::before {
 /*UTLITIES*/
 
 .main-container {
+    position: relative;
     width: 300px;
     height: 565px;
     z-index: 1;
@@ -130,7 +131,7 @@ body::before {
 
 /*END INPUT CONTAINER*/
 
-/*SECTION: WEATHER INFO*/
+/*: WEATHER INFO*/
 
 .weather-info {
     display: flex;
@@ -296,4 +297,40 @@ body::before {
 button:disabled {
     cursor: not-allowed;
     color: #666;
+}
+
+.city-list-container {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    width: 15%;
+    max-height: 50%;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.city-list-container h4 {
+    text-align: center;
+    margin: 0 0 10px;
+    font-size: 15px;
+}
+
+.city-list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.city-list-container li {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.city-list-container li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
