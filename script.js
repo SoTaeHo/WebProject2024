@@ -395,7 +395,8 @@ function updateRecentCityList() {
         // 클릭 이벤트 추가
         li.addEventListener('click', () => {
             console.log(`Click event for ${city.name}`);
-
+            isAnalyzed = false;
+            showDisplaySection(weatherInfoSection);
             // 클릭된 도시의 날씨 데이터를 사용해 main-container 업데이트
             updateWeatherInfoFromData(city.data);
 
