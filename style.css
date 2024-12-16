@@ -14,28 +14,6 @@
     color: white;
 }
 
-/*body {*/
-/*    background: url("assets/background/bg.jpg") center;*/
-/*    width: 100%;*/
-/*    height: 100dvh;*/
-/*    background-size: cover;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    backdrop-filter: blur(8px);*/
-/*    animation: moveBackground 3s linear infinite; !* 애니메이션 추가 *!*/
-/*}*/
-
-/*!* 배경을 움직이기 위한 키프레임 정의 *!*/
-/*@keyframes moveBackground {*/
-/*    0% {*/
-/*        background-position: 0 50%;*/
-/*    }*/
-/*    100% {*/
-/*        background-position: 100% 50%;*/
-/*    }*/
-/*}*/
-
 body {
     background: url("assets/background/bg.jpg") no-repeat;
     width: 100%;
